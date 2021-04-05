@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/alexcrack/tetris-sdl.svg?style=svg)](https://app.circleci.com/pipelines/github/alexcrack/tetris-sdl)
-
 # Tetris SDL
+
+Build status: [![CircleCI](https://circleci.com/gh/alexcrack/tetris-sdl.svg?style=shield)](https://app.circleci.com/pipelines/github/alexcrack/tetris-sdl)
 
 Simple tetris game using SDL2
 
