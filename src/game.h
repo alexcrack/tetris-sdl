@@ -29,8 +29,9 @@ protected:
     void doInput();
 
     void moveTetramino();
+    void checkField();
     int removeLines();
-    int getDelay();
+    void updateTimer();
 
 private:
     int ticks = 0;

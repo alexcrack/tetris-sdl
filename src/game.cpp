@@ -27,6 +27,8 @@ void Game::run()
         // Present scene
         presentScene();
 
+        updateTimer();
+
         // Delay
         platform->delay(DELAY);
     }
@@ -37,6 +39,7 @@ void Game::prepareScene()
     platform->prepare();
 
     moveTetramino();
+    checkField();
 
     engine->showLevel(level);
     engine->showScore(score);
@@ -57,14 +60,11 @@ void Game::doInput()
 
 void Game::up()
 {
-    std::cout << "Button" << std::endl;
     if (currentFigure->canRotate()) { currentFigure->rotate(); }
 }
 
 void Game::down()
-{
-    if (currentFigure->canMoveDown()) { currentFigure->moveDown(); }
-}
+{}
 
 void Game::left()
 {
@@ -78,8 +78,15 @@ void Game::right()
 
 void Game::moveTetramino()
 {
-    ++ticks;
+    if (control.down && currentFigure->canMoveDown()) { currentFigure->moveDown(); }
 
+    if (ticks % 32 == 0) {
+        currentFigure->moveDown();
+    }
+}
+
+void Game::checkField()
+{
     if (!currentFigure->canMoveDown()) {
         currentFigure->transferToField(&field);
         delete currentFigure;
@@ -88,17 +95,16 @@ void Game::moveTetramino()
         score += points * 10;
 
         currentFigure = new Tetramino(&field, FIELD_COLS / 2, -TETRAMINO_SIZE);
-    } else {
-        if (ticks == 32) {
-            ticks = 0;
-            currentFigure->moveDown();
-        }
     }
 }
 
-int Game::getDelay()
+void Game::updateTimer()
 {
-    return 500 / level;
+    ++ticks;
+
+    if (ticks == 0xFFFF) {
+        ticks = 0;
+    }
 }
 
 int Game::removeLines()
