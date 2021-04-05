@@ -60,7 +60,10 @@ void Game::doInput()
 
 void Game::up()
 {
-    if (currentFigure->canRotate()) { currentFigure->rotate(); }
+    if (currentFigure->canRotate()) {
+        currentFigure->rotate();
+        platform->playSound(Platform::Sound::BLOCK_MOVE);
+    }
 }
 
 void Game::down()
@@ -68,12 +71,18 @@ void Game::down()
 
 void Game::left()
 {
-    if (currentFigure->canMoveLeft()) { currentFigure->moveLeft(); }
+    if (currentFigure->canMoveLeft()) {
+        currentFigure->moveLeft();
+        platform->playSound(Platform::Sound::BLOCK_MOVE);
+    }
 }
 
 void Game::right()
 {
-    if (currentFigure->canMoveRight()) { currentFigure->moveRight(); }
+    if (currentFigure->canMoveRight()) {
+        currentFigure->moveRight();
+        platform->playSound(Platform::Sound::BLOCK_MOVE);
+    }
 }
 
 void Game::moveTetramino()
@@ -92,7 +101,13 @@ void Game::checkField()
         delete currentFigure;
 
         auto points = removeLines();
-        score += points * 10;
+
+        if (points > 0) {
+            score += points * 10;
+            platform->playSound(Platform::Sound::CLEAR_ROW);
+        } else {
+            platform->playSound(Platform::Sound::BLOCK_STOP);
+        }
 
         currentFigure = new Tetramino(&field, FIELD_COLS / 2, -TETRAMINO_SIZE);
     }

@@ -84,6 +84,10 @@ int Platform::initSounds()
 
     music = Mix_LoadMUS(MUSIC_PATH);
 
+    sounds[Sound::CLEAR_ROW] = Mix_LoadWAV(CLEAR_ROW_SOUND);
+    sounds[Sound::BLOCK_STOP] = Mix_LoadWAV(BLOCK_STOP_SOUND);
+    sounds[Sound::BLOCK_MOVE] = Mix_LoadWAV(BLOCK_MOVE_SOUND);
+
     return 0;
 }
 
@@ -228,4 +232,9 @@ void Platform::drawText(int x, int y, std::string text)
 void Platform::playMusic()
 {
     Mix_PlayMusic(music, -1);
+}
+
+void Platform::playSound(Sound sound)
+{
+    Mix_PlayChannel(sound, sounds[sound], 0);
 }
