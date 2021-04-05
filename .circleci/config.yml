@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: "ubuntu:20.04"
+    steps:
+      - checkout
+      - run:
+          name: Installing SUDO
+          command: 'apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*'
+      - run: 
+          name: Setup timezone
+          command: 'sudo ln -snf /usr/share/zoneinfo/Europe/Dublin /etc/localtime && echo "Europe/Dublin" > /etc/timezonea'
+      - run:
+          name: Installing build tools
+          command: 'apt-get update && apt-get install -y gcc g++ cmake binutils'
+      - run:
+          name: Install libs
+          command: 'apt-get update && sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev libsdl2-mixer-dev libfmt-dev'
+      - run:
+          name: Creating Build Files
+          command: 'cmake -H. -Bbuild'
+      - run:
+          name: Creating Binary Files
+          command: 'cmake --build build'
