@@ -11,7 +11,7 @@ jobs:
           command: 'apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*'
       - run: 
           name: Setup timezone
-          command: 'sudo ln -fs /usr/share/zoneinfo/Europe/Minsk /etc/localtime && sudo dpkg-reconfigure -f noninteractive tzdata'
+          command: 'sudo ln -snf /usr/share/zoneinfo/Europe/Dublin /etc/localtime && echo "Europe/Dublin" > /etc/timezonea'
       - run:
           name: Installing build tools
           command: 'apt-get update && apt-get install -y gcc g++ cmake binutils'
